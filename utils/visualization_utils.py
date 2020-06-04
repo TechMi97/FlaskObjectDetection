@@ -329,7 +329,7 @@ def visualize_boxes_and_labels_on_image_array(image,
                                               keypoints=None,
                                               use_normalized_coordinates=False,
                                               max_boxes_to_draw=20,
-                                              min_score_thresh=.5,
+                                              min_score_thresh=.2,
                                               agnostic_mode=False,
                                               line_thickness=4):
   """Overlay labeled boxes on an image with formatted scores and label names.
@@ -364,6 +364,7 @@ def visualize_boxes_and_labels_on_image_array(image,
   """
   # Create a display string (and color) for every box location, group any boxes
   # that correspond to the same location.
+  copystring="no class"
   box_to_display_str_map = collections.defaultdict(list)
   box_to_color_map = collections.defaultdict(str)
   box_to_instance_masks_map = {}
@@ -388,8 +389,14 @@ def visualize_boxes_and_labels_on_image_array(image,
           display_str = '{}: {}%'.format(
               class_name,
               int(100*scores[i]))
+          copystring=display_str
+          # print(copystring)
+          visualize_boxes_and_labels_on_image_array.i=copystring
+          # print(display_str)
+
         else:
           display_str = 'score: {}%'.format(int(100 * scores[i]))
+
         box_to_display_str_map[box].append(display_str)
         if agnostic_mode:
           box_to_color_map[box] = 'DarkOrange'
